@@ -1,11 +1,12 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
-const API = 'http://localhost:8082/users'
-const APIpayload = 'http://localhost:8082/payload'
+const API = 'http://localhost:8085/users'
+const APIpayload = 'http://localhost:8085/payload'
+const APILogin = 'http://localhost:8085/login'
 export default createStore({
   state: {
     users:[],
-    payload: []
+    payload: {}
   },
   getters: {
   },
@@ -31,10 +32,28 @@ export default createStore({
     async fetchPayload({commit}){
       try {
         const data = await axios.get(APIpayload)
-        console.log(data.data);
-        commit('setPayload', data.data)
+        console.log(data.data[0]);
+        commit('setPayload', data.data[0])
       } catch (error) {
         console.error(error)
+      }
+    },
+    async log_in({ commit }, user) {
+      try {
+        let { data } = await axios.post(APILogin, user);
+        console.log(data);
+    
+        if (data.token !== undefined) {
+          $cookies.set('jwt', data.token);
+          console.log($cookies);
+          commit('setLogged');
+        } else {
+          throw new Error("Email or password is incorrect");
+        }
+      } catch (error) {
+        $cookies.remove('jwt');
+        commit('setLogged');
+        throw error; // Re-throw the error to be caught in the component method
       }
     }
   },

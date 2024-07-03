@@ -1,21 +1,21 @@
 <template>
+  <!-- <sidebar/> -->
   <div class="container">
     <div class="row mt-5">
       <div class="col-md-6">
         <h2>Device Information</h2>
-        <p >Device ID: {{ payloadData.device }}</p>
-        <p >Time: {{ payloadData.time }}</p>
+        <p >Device ID: {{ $store.state.payload.device }}</p>
+        <p >Time: {{ $store.state.payload.time }}</p>
         <!-- Add more fields as needed -->
       </div>
-      <div class="col-md-6">
-        <canvas id="snrChart"></canvas>
-      </div>
+      <div id="graph"></div>
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import sidebar from '@/components/sidebar.vue'
 
 
 
@@ -23,11 +23,12 @@
 export default {
   name: 'HomeView',
   components: {
-  
+  sidebar
   },
   data() {
     return {
-      payloadData: [],
+      
+    
 
     }
   },
@@ -38,7 +39,7 @@ export default {
     ,
     fetchPayload(){
       this.$store.dispatch('fetchPayload')
-      this.payloadData = this.$store.state.payload[0]
+      // this.payloadData = this.$store.state.payload
     }
   },
   mounted() {
