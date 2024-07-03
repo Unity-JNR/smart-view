@@ -6,7 +6,8 @@ const APILogin = 'http://localhost:8085/login'
 export default createStore({
   state: {
     users:[],
-    payload: {}
+    payload: {},
+    logged: false
   },
   getters: {
   },
@@ -16,6 +17,9 @@ export default createStore({
     },
     setPayload(state, payload){
       state.payload = payload
+    },
+    setLogged(state){
+      state.logged = true
     }
   },
   actions: {
@@ -46,6 +50,7 @@ export default createStore({
         if (data.token !== undefined) {
           $cookies.set('jwt', data.token);
           console.log($cookies);
+          alert('success');
           commit('setLogged');
         } else {
           throw new Error("Email or password is incorrect");

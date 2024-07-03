@@ -42,9 +42,18 @@ export default {
       // this.payloadData = this.$store.state.payload
     }
   },
+  methods: {
+    conversion(){
+      const voltage = this.$store.state.payload.seqNumber
+      const volt = 615/1000
+      console.log(volt);
+
+    }
+  },
   mounted() {
     this.fetchUsers,
-    this.fetchPayload
+    this.fetchPayload,
+    this.conversion()
   },
   
   
