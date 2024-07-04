@@ -23,7 +23,7 @@
                     <a href="#">
                        <i class="fa fa-user fa-2x"></i>
                         <span class="nav-text">
-                            Account
+                          <router-link to="/user">Account</router-link>  
                         </span>
                     </a>
                     

@@ -86,12 +86,12 @@ export default {
 
     async renderChart() {
       const ctx = document.getElementById('graph').getContext('2d');
-      const labels = [1596940.629, 319388125875, 6387762.5175, 12775525.035, await this.timeconversion()];
+      const labels = [1596940.63, 319388125875, 6387762.52, 12775525.04, await this.timeconversion()];
       const data = {
         labels: labels,
         datasets: [{
-          label: 'My First Dataset',
-          data: [0.100, 0.200, 0.300, 0.400, 0.500, await this.conversion()],
+          label: 'Data',
+          data: [0.100, 0.200, 0.300, 0.400, await this.conversion()],
           fill: false,
           borderColor: 'rgb(75, 192, 192)',
           tension: 0.1

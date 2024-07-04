@@ -7,7 +7,8 @@ export default createStore({
   state: {
     users:[],
     payload: {},
-    logged: false
+    logged: false,
+    oneUser: {}
   },
   getters: {
   },
@@ -20,7 +21,11 @@ export default createStore({
     },
     setLogged(state){
       state.logged = true
+    },
+    setOne(state, payload){
+     state.oneUser = payload
     }
+
   },
   actions: {
 
@@ -59,6 +64,15 @@ export default createStore({
         $cookies.remove('jwt');
         commit('setLogged');
         throw error; // Re-throw the error to be caught in the component method
+      }
+    },
+    async fetchoneuser({ commit},id) {
+      try {
+        const data = await axios.get(`${API}/${id}`)
+        console.log(data.data);
+        commit('setOne', data.data)
+      } catch (error) {
+        console.error(error)
       }
     }
   },
