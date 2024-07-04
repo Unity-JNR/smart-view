@@ -1,8 +1,8 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
-const API = 'http://localhost:8085/users'
-const APIpayload = 'http://localhost:8085/payload'
-const APILogin = 'http://localhost:8085/login'
+const API = 'http://localhost:8082/users'
+const APIpayload = 'http://localhost:8082/payload'
+const APILogin = 'http://localhost:8082/login'
 export default createStore({
   state: {
     users:[],

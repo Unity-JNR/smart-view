@@ -1,287 +1,234 @@
 <template>
-    <div class="container">
-    <div class="sidebar">
-      <div class="menu-btn"><i class="ph-bold ph-caret-left"></i></div>
-      <div class="head">
-        <div class="user-img"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MTUzMjAyMTh8&ixlib=rb-4.0.3&q=85" alt=""></div>
-        <div class="user-details">
-          <p class="title">web developer</p>
-          <p class="name">Kalvin Calimag</p>
-        </div>
-      </div>
-      <div class="nav">
-        <div class="menu">
-          <p class="title">Main</p>
-          <ul>
-            <li><a href="#"><i class="icon ph-bold ph-house-simple"></i><span class="text">Dashboard</span></a></li>
-            <li><a href="#"><i class="icon ph-bold ph-user"></i><span class="text">Viewers</span><i class="arrow ph-bold ph-caret-down"></i></a>
-              <ul class="sub-menu">
-                <li><a href="#"><span class="text">Users</span></a></li>
-                <li><a href="#"><span class="text">Subscribers</span></a></li>
-              </ul>
-            </li>
-            <li><a href="#"><i class="icon ph-bold ph-calendar-blank"></i><span class="text">Agenda</span></a></li>
-            <li><a href="#"><i class="icon ph-bold ph-chart-bar"></i><span class="text">Revenue</span><i class="arrow ph-bold ph-caret-down"></i></a>
-              <ul class="sub-menu">
-                <li><a href="#"><span class="text">Earnings</span></a></li>
-                <li><a href="#"><span class="text">Funds</span></a></li>
-                <li><a href="#"><span class="text">Declines</span></a></li>
-                <li><a href="#"><span class="text">Payouts</span></a></li>
-              </ul>
-            </li>
-            <li class="active"><a href="#"><i class="icon ph-bold ph-file-text"></i><span class="text">Articles</span></a></li>
-          </ul>
-        </div>
-        <div class="menu">
-          <p class="title">Settings</p>
-          <ul>
-            <li><a href="#"><i class="icon ph-bold ph-gear"></i><span class="text">Settings</span></a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="menu">
-        <p class="title">Account</p>
-        <ul>
-          <li><a href="#"><i class="icon ph-bold ph-info"></i><span class="text">FAQ</span></a></li>
-          <li><a href="#"><i class="icon ph-bold ph-sign-out"></i><span class="text">Logout</span></a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
+ <div class="area"></div><nav class="main-menu">
+            <ul>
+                <li>
+                    <a href="https://jbfarrow.com">
+                        <i class="fa fa-home fa-2x"></i>
+                        <span class="nav-text">
+                        <router-link to="/" >Community Dashboard</router-link>   
+                        </span>
+                    </a>
+                  
+                </li>
+                <li class="has-subnav">
+                    <a href="#">
+                        <i class="fa fa-sign-in fa-2x"></i>
+                        <span class="nav-text">
+                           <router-link to="/about">Login</router-link>
+                        </span>
+                    </a>
+                    
+                </li>
+                <li class="has-subnav">
+                    <a href="#">
+                       <i class="fa fa-user fa-2x"></i>
+                        <span class="nav-text">
+                            Account
+                        </span>
+                    </a>
+                    
+                </li>
+                <!-- <li class="has-subnav">
+                    <a href="#">
+                       <i class="fa fa-camera-retro fa-2x"></i>
+                        <span class="nav-text">
+                            Survey Photos
+                        </span>
+                    </a>
+                   
+                </li> -->
+                <!-- <li>
+                    <a href="#">
+                        <i class="fa fa-film fa-2x"></i>
+                        <span class="nav-text">
+                            Surveying Tutorials
+                        </span>
+                    </a>
+                </li> -->
+                <!-- <li>
+                    <a href="#">
+                        <i class="fa fa-book fa-2x"></i>
+                        <span class="nav-text">
+                           Surveying Jobs
+                        </span>
+                    </a>
+                </li> -->
+                <!-- <li>
+                   <a href="#">
+                       <i class="fa fa-cogs fa-2x"></i>
+                        <span class="nav-text">
+                            Tools & Resources
+                        </span>
+                    </a>
+                </li> -->
+                <!-- <li>
+                   <a href="#">
+                        <i class="fa fa-map-marker fa-2x"></i>
+                        <span class="nav-text">
+                            Member Map
+                        </span>
+                    </a>
+                </li> -->
+             
+            </ul>
+
+            <ul class="logout"  v-if="$cookies.get('jwt')">
+                <li>
+                   <a href="#">
+                         <i class="fa fa-power-off fa-2x"></i>
+                        <span class="nav-text">
+                            Logout
+                        </span>
+                    </a>
+                </li>  
+            </ul>
+        </nav>
 </template>
 
 <script>
     export default {
-        methods: {
-            toggleMenu() {
-                $(".menu > ul > li").click(function (e) {
-    // Remove the 'active' class from other menu items
-    $(this).siblings().removeClass("active");
-    // Toggle the 'active' class on the clicked menu item
-    $(this).toggleClass("active");
-    // Toggle the visibility of the submenu
-    $(this).find("ul").slideToggle();
-    // Close other submenus if they are open
-    $(this).siblings().find("ul").slideUp();
-    // Remove the 'active' class from submenu items
-    $(this).siblings().find("ul").find("li").removeClass("active");
-});
-
-$(".menu-btn").click(function () {
-    // Toggle the 'active' class on the sidebar
-    $(".sidebar").toggleClass("active");
-});
-
-            }
-        },
-        mounted() {
-            this.toggleMenu();
-        }
+     
     }
 </script>
 
 <style scoped>
-@import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900);
+@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Inter", sans-serif;
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
+.fa-2x {
+font-size: 2em;
 }
-body {
-  background-color: #ff8080;
-}
-.container {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  min-height: 100vh;
-}
-.sidebar {
-  position: relative;
-  width: 256px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  background-color: #fff;
-  padding: 24px;
-  border-radius: 30px;
-  transition: all 0.3s;
-}
-.sidebar {
-  display: flex;
-  gap: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #f6f6f6;
+.fa {
+position: relative;
+display: table-cell;
+width: 60px;
+height: 36px;
+text-align: center;
+vertical-align: middle;
+font-size:20px;
 }
 
-.head {
-  display: flex;
-  gap: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #f6f6f6;
-}
-
-.user-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-.user-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.user-details .title,
-.menu .title {
-  font-size: 10px;
-  font-weight: 500;
-  color: #757575;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-.user-details .name {
-  font-size: 14px;
-  font-weight: 500;
-}
-.nav {
-  flex: 1;
-}
-.menu ul li {
-  position: relative;
-  list-style: none;
-  margin-bottom: 5px;
-}
-.menu ul li a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #757575;
-  text-decoration: none;
-  padding: 12px 8px;
-  border-radius: 8px;
-  transition: all 0.3s;
-}
-.menu ul li > a:hover,
-.menu ul li.active > a {
-  color: #000;
-  background-color: #f6f6f6;
-}
-.menu ul li .icon {
-  font-size: 20px;
-}
-.menu ul li .text {
-  flex: 1;
-}
-.menu ul li .arrow {
-  font-size: 14px;
-  transition: all 0.3s;
-}
-.menu ul li.active .arrow {
-  transform: rotate(180deg);
-}
-.menu .sub-menu {
-  display: none;
-  margin-left: 20px;
-  padding-left: 20px;
-  padding-top: 5px;
-  border-left: 1px solid #f6f6f6;
-}
-.menu .sub-menu li a {
-  padding: 10px 8px;
-  font-size: 12px;
-}
-.menu:not(:last-child) {
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #f6f6f6;
-}
-.menu-btn {
-  position: absolute;
-  right: -14px;
-  top: 3.5%;
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: #757575;
-  border: 2px solid #f6f6f6;
-  background-color: #fff;
-}
-.menu-btn:hover i {
-  color: #000;
-}
-.menu-btn i {
-  transition: all 0.3s;
-}
-.sidebar.active {
-  width: 92px;
-}
-.sidebar.active .menu-btn i {
-  transform: rotate(180deg);
-}
-.sidebar.active .user-details {
-  display: none;
-}
-.sidebar.active .menu .title {
-  text-align: center;
-}
-.sidebar.active .menu ul li .arrow {
-  display: none;
-}
-.sidebar.active .menu > ul > li > a {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.sidebar.active .menu > ul > li > a .text {
-  position: absolute;
-  left: 70px;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 10px;
-  border-radius: 4px;
+nav a {
+  font-weight: bold;
   color: #fff;
-  background-color: #000;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s;
+  text-decoration: none;
 }
-.sidebar.active .menu > ul > li > a .text::after {
-  content: "";
-  position: absolute;
-  left: -5px;
-  top: 20%;
-  width: 20px;
-  height: 20px;
-  border-radius: 2px;
-  background-color: #000;
-  transform: rotate(45deg);
-  z-index: -1;
+
+nav a.router-link-exact-active {
+  color: #4BC0C0
 }
-.sidebar.active .menu > ul > li > a:hover .text {
-  left: 50px;
-  opacity: 1;
-  visibility: visible;
+
+.main-menu:hover,nav.main-menu.expanded {
+width:250px;
+overflow:visible;
 }
-.sidebar.active .menu .sub-menu {
-  position: absolute;
-  top: 0;
-  left: 20px;
-  width: 200px;
-  border-radius: 20px;
-  padding: 10px 20px;
-  border: 1px solid #f6f6f6;
-  background-color: #fff;
-  box-shadow: 0px 10px 8px rgba(0, 0, 0, 0.1);
+
+.main-menu {
+background:#212121;
+border-right:1px solid #e5e5e5;
+position:absolute;
+top:0;
+bottom:0;
+height:100%;
+left:0;
+width:60px;
+overflow:hidden;
+-webkit-transition:width .05s linear;
+transition:width .05s linear;
+-webkit-transform:translateZ(0) scale(1,1);
+z-index:1000;
 }
+
+.main-menu>ul {
+margin:7px 0;
+}
+
+.main-menu li {
+position:relative;
+display:block;
+width:250px;
+}
+
+.main-menu li>a {
+position:relative;
+display:table;
+border-collapse:collapse;
+border-spacing:0;
+color:#999;
+ font-family: arial;
+font-size: 14px;
+text-decoration:none;
+-webkit-transform:translateZ(0) scale(1,1);
+-webkit-transition:all .1s linear;
+transition:all .1s linear;
+  
+}
+
+.main-menu .nav-icon {
+position:relative;
+display:table-cell;
+width:60px;
+height:36px;
+text-align:center;
+vertical-align:middle;
+font-size:18px;
+}
+
+.main-menu .nav-text {
+position:relative;
+display:table-cell;
+vertical-align:middle;
+width:190px;
+  font-family: 'Titillium Web', sans-serif;
+}
+
+.main-menu>ul.logout {
+position:absolute;
+left:0;
+bottom:0;
+}
+
+.no-touch .scrollable.hover {
+overflow-y:hidden;
+}
+
+.no-touch .scrollable.hover:hover {
+overflow-y:auto;
+overflow:visible;
+}
+
+a:hover,a:focus {
+text-decoration:none;
+}
+
+nav {
+-webkit-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+-o-user-select:none;
+user-select:none;
+}
+
+nav ul,nav li {
+outline:0;
+margin:0;
+padding:0;
+}
+.main-menu li:hover>a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
+color:#fff;
+background-color:#000000;
+}
+.area {
+float: left;
+background: #e2e2e2;
+width: 100%;
+height: 100%;
+}
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Titillium WebLight'), local('TitilliumWeb-Light'), url(http://themes.googleusercontent.com/static/fonts/titilliumweb/v2/anMUvcNT0H1YN4FII8wpr24bNCNEoFTpS2BTjF6FB5E.woff) format('woff');
+}
+
 </style>
