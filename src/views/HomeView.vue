@@ -1,8 +1,25 @@
 <template>
   <sidebar/>
-  <div class="container">
+  <div class="container d-flex justify-content-center align-items-center">
     <div class="row mt-5">
-      <canvas id="graph"></canvas>
+      <div class="col-lg-8">
+        <canvas id="graph"></canvas>
+      </div>
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="content">
+            <p class="heading">Data</p>
+            <ul class="data-list">
+              <li>Device: {{ $store.state.payload.device }}</li>
+              <li>Snr: {{ $store.state.payload.snr }}</li>
+              <li>AvgSnr: {{ $store.state.payload.avgSnr }}</li>
+              <li>Station: {{ $store.state.payload.station }}</li>
+              <li>Rssi: {{ $store.state.payload.rssi }}</li>
+              <li>Degrees: {{ pitch }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -18,7 +35,8 @@ export default {
   },
   data() {
     return {
-      chart: null
+      chart: null,
+      pitch: 0
     };
   },
   computed: {
@@ -46,42 +64,33 @@ export default {
     },
     async calculatePitchAndRoll() {
       const payloadData = await this.fetchPayload();
-      // Assuming the device starts in a known orientation (flat)
       let initialOrientation = { pitch: 0, roll: 0 };
 
-      // Replace this example accelerometerData with actual data from your application
       let accelerometerData = [
         { time: '25551050', x: 28.0, y: -26.0, z: 0 }
       ];
 
       accelerometerData.forEach(dataPoint => {
-        // Calculate pitch
         let pitchChange = Math.atan2(dataPoint.y, Math.sqrt(dataPoint.x ** 2 + dataPoint.z ** 2));
-        let pitch = pitchChange * (180 / Math.PI); // Convert radians to degrees
+        let pitch = pitchChange * (180 / Math.PI);
 
-        // Calculate roll
         let rollChange = Math.atan2(dataPoint.z, dataPoint.x);
-        let roll = rollChange * (180 / Math.PI); // Convert radians to degrees
+        let roll = rollChange * (180 / Math.PI);
 
-        // Normalize pitch and roll to range between -180 and 180 degrees
         pitch = ((pitch + 180) % 360) - 180;
         roll = ((roll + 180) % 360) - 180;
 
-        // Accumulate pitch and roll values across all data points
         initialOrientation.pitch += pitch;
         initialOrientation.roll += roll;
       });
 
-      // Check if pitch or roll exceeds 40 degrees
       if (Math.abs(initialOrientation.pitch) > 40 || Math.abs(initialOrientation.roll) > 40) {
-        alert(payloadData.data);
-        // console.log(payloadData.data);
+        console.log(payloadData.data);
       }
 
-      // Optionally, you may want to store or use initialOrientation here
       console.log(`Pitch: ${initialOrientation.pitch} degrees, Roll: ${initialOrientation.roll} degrees`);
 
-      return initialOrientation; // Return the final pitch and roll
+      this.pitch = initialOrientation.pitch.toFixed(2);
     },
 
     async renderChart() {
@@ -101,7 +110,10 @@ export default {
       this.chart = new Chart(ctx, {
         type: 'line',
         data: data,
-        options: {}
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
+        }
       });
     }
   },
@@ -116,3 +128,68 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.container {
+  height: 100vh;
+}
+
+.row {
+  width: 100%;
+}
+
+#graph {
+  width: 100% !important;
+  height: 500px !important;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 320px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  padding: 32px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #212121;
+  border: 2px solid #313131;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+  margin-top: 5rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  color: #e8e8e8;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.content .heading {
+  font-weight: 700;
+  font-size: 32px;
+}
+
+.data-list {
+  list-style: none;
+  padding: 0;
+}
+
+.data-list li {
+  line-height: 1.5;
+}
+
+.card:hover {
+  box-shadow: 0 0 20px rgba(9, 117, 241, 0.8);
+  border-color: #0974f1;
+}
+
+.content .btn:hover {
+  outline: 2px solid #e8e8e8;
+  background: transparent;
+  color: #e8e8e8;
+}
+</style>
