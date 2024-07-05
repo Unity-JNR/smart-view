@@ -5,7 +5,7 @@
                     <a href="https://jbfarrow.com">
                         <i class="fa fa-home fa-2x"></i>
                         <span class="nav-text">
-                        <router-link to="/" >Community Dashboard</router-link>   
+                        <router-link to="/home" >Community Dashboard</router-link>   
                         </span>
                     </a>
                   
@@ -14,7 +14,7 @@
                     <a href="#">
                         <i class="fa fa-sign-in fa-2x"></i>
                         <span class="nav-text">
-                           <router-link to="/about">Login</router-link>
+                           <router-link to="/">Login</router-link>
                         </span>
                     </a>
                     

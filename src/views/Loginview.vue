@@ -1,4 +1,5 @@
 <template>
+  <sidebar/>
   <div class="container d-flex justify-content-center align-content-center">
     <div class="login-box">
   <p>Login</p>
@@ -25,8 +26,9 @@
 </template>
 
 <script>
-
-  export default {
+import sidebar from '@/components/sidebar.vue';
+    export default {
+      components: { sidebar }, 
    data(){
      return {
        email: '',

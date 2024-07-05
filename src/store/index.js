@@ -54,6 +54,7 @@ export default createStore({
     
         if (data.token !== undefined) {
           $cookies.set('jwt', data.token);
+          $cookies.set('user', data.user.id);
           console.log($cookies);
           alert('success');
           commit('setLogged');
@@ -62,13 +63,14 @@ export default createStore({
         }
       } catch (error) {
         $cookies.remove('jwt');
+        $cookies.remove('userId');
         commit('setLogged');
         throw error; // Re-throw the error to be caught in the component method
       }
     },
-    async fetchoneuser({ commit},id) {
+    async fetchoneuser({ commit},userid) {
       try {
-        const data = await axios.get(`${API}/${id}`)
+        const data = await axios.get(API+'/'+userid)
         console.log(data.data);
         commit('setOne', data.data)
       } catch (error) {
