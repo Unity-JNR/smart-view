@@ -1,8 +1,9 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
-const API = 'http://localhost:8082/users'
-const APIpayload = 'http://localhost:8082/payload'
-const APILogin = 'http://localhost:8082/login'
+import  router from '../router'
+const API = 'http://localhost:8085/users'
+const APIpayload = 'http://localhost:8085/payload'
+const APILogin = 'http://localhost:8085/login'
 export default createStore({
   state: {
     users:[],
@@ -58,6 +59,7 @@ export default createStore({
           console.log($cookies);
           alert('success');
           commit('setLogged');
+          router.push('/home');
         } else {
           throw new Error("Email or password is incorrect");
         }
@@ -76,6 +78,12 @@ export default createStore({
       } catch (error) {
         console.error(error)
       }
+    },
+    async logout({ commit}){
+      $cookies.remove('jwt');
+      $cookies.remove('userId');
+      commit('setLogged');
+      router.push('/');
     }
   },
   modules: {

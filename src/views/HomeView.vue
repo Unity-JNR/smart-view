@@ -42,6 +42,9 @@ export default {
   computed: {
     fetchUsers() {
       return this.$store.dispatch('fetchUsers');
+    },
+    jwt() {
+      return this.$cookies.get('jwt');
     }
   },
   methods: {
@@ -119,12 +122,15 @@ export default {
   },
 
   async mounted() {
-    await this.fetchUsers;
-    await this.fetchPayload();
-    await this.conversion();
-    await this.renderChart();
-    await this.timeconversion();
-    await this.calculatePitchAndRoll();
+    if (this.jwt) {
+      await this.fetchPayload();
+      await this.conversion();
+      await this.renderChart();
+      await this.timeconversion();
+      await this.calculatePitchAndRoll();
+    }else {
+      alert('Please log in first to see the data.');
+    }
   }
 };
 </script>
