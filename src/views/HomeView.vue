@@ -27,6 +27,9 @@
 <script>
 import sidebar from '@/components/sidebar.vue';
 import { Chart } from 'chart.js/auto';
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+
 
 export default {
   name: 'HomeView',
@@ -88,7 +91,7 @@ export default {
       });
 
       if (Math.abs(initialOrientation.pitch) > 40 || Math.abs(initialOrientation.roll) > 40) {
-        console.log(payloadData.data);
+        toast('Tamper detection: ' + payloadData.data, { theme: "dark", timeout: 3000 });
       }
 
       console.log(`Pitch: ${initialOrientation.pitch} degrees, Roll: ${initialOrientation.roll} degrees`);

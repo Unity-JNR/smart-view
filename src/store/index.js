@@ -57,7 +57,7 @@ export default createStore({
           $cookies.set('jwt', data.token);
           $cookies.set('user', data.user.id);
           console.log($cookies);
-          alert('success');
+          // alert('success');
           commit('setLogged');
           router.push('/home');
         } else {

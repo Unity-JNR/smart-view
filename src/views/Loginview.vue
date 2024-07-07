@@ -27,6 +27,8 @@
 
 <script>
 import sidebar from '@/components/sidebar.vue';
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
     export default {
       components: { sidebar }, 
    data(){
@@ -36,8 +38,30 @@ import sidebar from '@/components/sidebar.vue';
      }
    },
    methods: {
-    log_in(){
-      this.$store.dispatch('log_in',this.$data)
+   async log_in(){
+      try {
+    // Attempt to log in
+    await this.$store.dispatch('log_in', this.$data);
+    
+    // If login is successful, show success toast message
+    toast.success("Successfully logged in", { theme: "dark", timeout: 1000 });
+    
+    // Wait for 1000 milliseconds (1 second)
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Navigate to the home page
+    await this.$router.push('/home');    
+    
+    // Reload the page
+    location.reload();
+  } catch (error) {
+    // If login fails, show error toast message
+    toast.error("Email or password is incorrect", { theme: "dark", timeout: 3000 });
+    console.error("Login error:", error);
+    setTimeout(() => {
+      location.reload();
+    }, 1500);
+  }
     }
    }
   }

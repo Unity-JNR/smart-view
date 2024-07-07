@@ -86,10 +86,16 @@
 </template>
 
 <script>
+import { toast } from "vue3-toastify";
     export default {
      methods: {
-        logout(){
-            this.$store.dispatch('logout');
+        async logout() {
+  await this.$store.dispatch('logout');
+  toast.success("Successfully logged out", { theme: "dark", timeout: 5000 });
+
+  // Wait for 3 seconds before routing
+  await new Promise(resolve => setTimeout(resolve, 3000));
+  this.$router.push("/")
         }
      }
     }
