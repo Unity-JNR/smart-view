@@ -102,9 +102,10 @@ import { toast } from "vue3-toastify";
 </script>
 
 <style scoped>
-@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+@import url(https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
 
-@import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
+
+/* @import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);  */
 .fa-2x {
 font-size: 2em;
 }
