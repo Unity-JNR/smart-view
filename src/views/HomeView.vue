@@ -51,46 +51,61 @@ export default {
     },
     // Convert sequence number to voltage
     async conversion() {
-      try {
-        const payloadData = this.$store.state.payload;
+  try {
+    await this.fetchPayload();
+    const payloadData = this.$store.state.payload;
 
-        if (!Array.isArray(payloadData)) {
-          throw new Error("Payload data is not an array");
-        }
+    if (!Array.isArray(payloadData)) {
+      throw new Error("Payload data is not an array");
+    }
 
-        const convertedValues = payloadData.map(item => {
-          const voltage = item.data;
+    const convertedValues = payloadData.map(item => {
+      const voltage = item.data;
 
-          let convertedValue;
+      let convertedValue;
 
-          if (voltage === "01") {
-            convertedValue = "01";
-          } else if (!isNaN(voltage)) {
-            convertedValue = parseFloat(voltage);
-          } else {
-            convertedValue = parseFloat(String(voltage).replace(/[^0-9.-]+/g, ''));
-          }
-
-          console.log(convertedValue);
-
-          return { ...item, data: convertedValue };
-        });
-
-        return convertedValues;
-
-      } catch (error) {
-        console.error("Error converting voltage:", error);
-        return null;
+      if (voltage === "01") {
+        convertedValue = "01";
+      } else if (!isNaN(voltage)) {
+        convertedValue = parseFloat(voltage);
+      } else {
+        convertedValue = parseFloat(String(voltage).replace(/[^0-9.-]+/g, ''));
       }
-    },
+
+      console.log(convertedValue);
+
+      return { ...item, data: convertedValue };
+    });
+
+    return convertedValues;
+
+  } catch (error) {
+    console.error("Error converting voltage:", error);
+    return null;
+  }
+},
+,
     // Calculate average time conversion
     async timeconversion() {
-      const payloadData = await this.fetchPayload();
-      // Sum all time values in payloadData
-      const totalTimes = payloadData.reduce((accumulator, dataPoint) => accumulator + dataPoint.time, 0);
-      const averageMinutes = totalTimes / (payloadData.length * 60); // Calculate average minutes
-      return averageMinutes.toFixed(2);
-    },
+  try {
+    await this.fetchPayload();
+    const payloadData = this.$store.state.payload;
+
+    if (!Array.isArray(payloadData)) {
+      throw new Error("Payload data is not an array");
+    }
+
+    // Sum all time values in payloadData
+    const totalTimes = payloadData.reduce((accumulator, dataPoint) => accumulator + dataPoint.time, 0);
+    const averageMinutes = totalTimes / (payloadData.length * 60); // Calculate average minutes
+    return averageMinutes.toFixed(2);
+
+  } catch (error) {
+    console.error("Error in timeconversion:", error);
+    return null;
+  }
+},
+,
     // Schedule reset alert for the device
     scheduleResetAlert(deviceId) {
       toast('Device will reset in 10 minutes', { theme: "dark", timeout: 3000 });
@@ -153,62 +168,68 @@ export default {
     },
     // Render chart using Chart.js
     async renderChart() {
-      try {
-        const payloadData = await this.$store.state.payload;
+  try {
+    await this.fetchPayload();
+    const payloadData = this.$store.state.payload;
 
-        // Extracting data for chart
-        const labels = payloadData.map(dataPoint => dataPoint.time);
-        const snrData = payloadData.map(dataPoint => parseFloat(dataPoint.snr));
-        const avgSnrData = payloadData.map(dataPoint => parseFloat(dataPoint.avgSnr));
-        const rssiData = payloadData.map(dataPoint => parseFloat(dataPoint.rssi));
-
-        const ctx = document.getElementById('graph').getContext('2d');
-
-        const data = {
-          labels: labels,
-          datasets: [
-            {
-              label: 'SNR',
-              data: snrData,
-              fill: false,
-              borderColor: 'rgb(75, 192, 192)',
-              tension: 0.1
-            },
-            {
-              label: 'Avg SNR',
-              data: avgSnrData,
-              fill: false,
-              borderColor: 'rgb(192, 75, 192)',
-              tension: 0.1
-            },
-            {
-              label: 'RSSI',
-              data: rssiData,
-              fill: false,
-              borderColor: 'rgb(192, 192, 75)',
-              tension: 0.1
-            }
-          ]
-        };
-
-        // Create new Chart.js instance
-        if (this.chart) {
-          this.chart.destroy(); // Destroy previous chart instance if exists
-        }
-        this.chart = new Chart(ctx, {
-          type: 'line',
-          data: data,
-          options: {
-            responsive: true,
-            maintainAspectRatio: false
-          }
-        });
-
-      } catch (error) {
-        console.error('Error rendering chart:', error);
-        // Handle error as needed
-      }
+    if (!Array.isArray(payloadData)) {
+      throw new Error("Payload data is not an array");
     }
+
+    // Extracting data for chart
+    const labels = payloadData.map(dataPoint => dataPoint.time);
+    const snrData = payloadData.map(dataPoint => parseFloat(dataPoint.snr));
+    const avgSnrData = payloadData.map(dataPoint => parseFloat(dataPoint.avgSnr));
+    const rssiData = payloadData.map(dataPoint => parseFloat(dataPoint.rssi));
+
+    const ctx = document.getElementById('graph').getContext('2d');
+
+    const data = {
+      labels: labels,
+      datasets: [
+        {
+          label: 'SNR',
+          data: snrData,
+          fill: false,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1
+        },
+        {
+          label: 'Avg SNR',
+          data: avgSnrData,
+          fill: false,
+          borderColor: 'rgb(192, 75, 192)',
+          tension: 0.1
+        },
+        {
+          label: 'RSSI',
+          data: rssiData,
+          fill: false,
+          borderColor: 'rgb(192, 192, 75)',
+          tension: 0.1
+        }
+      ]
+    };
+
+    // Create new Chart.js instance
+    if (this.chart) {
+      this.chart.destroy(); // Destroy previous chart instance if exists
+    }
+    this.chart = new Chart(ctx, {
+      type: 'line',
+      data: data,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
+
+  } catch (error) {
+    console.error('Error rendering chart:', error);
+    // Handle error as needed
+  }
+},
+
   },
   // Execute methods on component mount
   async mounted() {
