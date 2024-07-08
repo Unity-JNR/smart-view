@@ -1,9 +1,9 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 import  router from '../router'
-const API = 'http://localhost:8085/users'
-const APIpayload = 'http://localhost:8085/payload'
-const APILogin = 'http://localhost:8085/login'
+const API = 'https://technical-y0j9.onrender.com/users'
+const APIpayload = 'https://technical-y0j9.onrender.com/payload'
+const APILogin = 'https://technical-y0j9.onrender.com/login'
 export default createStore({
   state: {
     users:[],
@@ -42,8 +42,8 @@ export default createStore({
     async fetchPayload({commit}){
       try {
         const data = await axios.get(APIpayload)
-        console.log(data.data[0]);
-        commit('setPayload', data.data[0])
+        console.log(data.data);
+        commit('setPayload', data.data)
       } catch (error) {
         console.error(error)
       }
