@@ -84,7 +84,7 @@ export default {
     return null;
   }
 },
-,
+
     // Calculate average time conversion
     async timeconversion() {
   try {
@@ -105,7 +105,7 @@ export default {
     return null;
   }
 },
-,
+
     // Schedule reset alert for the device
     scheduleResetAlert(deviceId) {
       toast('Device will reset in 10 minutes', { theme: "dark", timeout: 3000 });
