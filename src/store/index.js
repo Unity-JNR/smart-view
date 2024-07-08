@@ -33,7 +33,7 @@ export default createStore({
     async fetchUsers({commit}){
       try {
         const data = await axios.get(API)
-        console.log(data.data);
+        // console.log(data.data);
         commit('setUsers', data.data)
       } catch (error) {
         console.error(error)
@@ -42,7 +42,7 @@ export default createStore({
     async fetchPayload({commit}){
       try {
         const data = await axios.get(APIpayload)
-        console.log(data.data);
+        // console.log(data.data);
         commit('setPayload', data.data)
       } catch (error) {
         console.error(error)
@@ -51,7 +51,7 @@ export default createStore({
     async log_in({ commit }, user) {
       try {
         let { data } = await axios.post(APILogin, user);
-        console.log(data);
+        // console.log(data);
     
         if (data.token !== undefined) {
           $cookies.set('jwt', data.token);
@@ -73,7 +73,7 @@ export default createStore({
     async fetchoneuser({ commit},userid) {
       try {
         const data = await axios.get(API+'/'+userid)
-        console.log(data.data);
+        // console.log(data.data);
         commit('setOne', data.data)
       } catch (error) {
         console.error(error)
