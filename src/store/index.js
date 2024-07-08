@@ -7,7 +7,7 @@ const APILogin = 'https://technical-y0j9.onrender.com/login'
 export default createStore({
   state: {
     users:[],
-    payload: {},
+    payload: [],
     logged: false,
     oneUser: {}
   },
